@@ -161,6 +161,12 @@ public class AdminController {
         return loginService.updateUser(login);
     }
 
+    @PostMapping("/loginAuth/setDeleteYn")
+    @ResponseBody
+    public int setUserDeleteYn(@ModelAttribute Login login) {
+        return loginService.setUserDeleteYn(login);
+    }
+
     @PostMapping("/userAuth/delete")
     @ResponseBody
     public int deleteUserAuth(@ModelAttribute UserAuth userAuth) {

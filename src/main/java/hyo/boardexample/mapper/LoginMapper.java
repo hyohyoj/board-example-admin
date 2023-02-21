@@ -11,4 +11,5 @@ public interface LoginMapper {
     int insertUser(Login signUpForm);
     List<Login> getUserList();
     int updateUser(Login login);
+    int setUserDeleteYn(Login login);
 }

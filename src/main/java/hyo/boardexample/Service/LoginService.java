@@ -27,6 +27,10 @@ public class LoginService {
         return loginMapper.updateUser(login);
     }
 
+    public int setUserDeleteYn(Login login) {
+        return loginMapper.setUserDeleteYn(login);
+    }
+
     public String stringTest(String input){
         return input;
     }

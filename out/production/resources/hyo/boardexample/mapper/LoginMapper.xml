@@ -8,6 +8,7 @@
              user_id
             ,user_pw
             ,auth_code
+            ,delete_yn
         FROM
             user_info
         WHERE
@@ -45,6 +46,15 @@
                     auth_code = null
                 </otherwise>
             </choose>
+        WHERE
+            user_id = #{user_id}
+    </update>
+
+    <update id="setUserDeleteYn" parameterType="hyo.boardexample.domain.Login">
+        UPDATE
+            user_info
+        SET
+            delete_yn = #{delete_yn}
         WHERE
             user_id = #{user_id}
     </update>

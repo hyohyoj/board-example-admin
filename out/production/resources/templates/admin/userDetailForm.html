@@ -38,6 +38,27 @@
         });
     }
 
+    function setUserDelete(userId, yn) {
+
+        $.ajax({
+            type : "POST",
+            url : "/admin/loginAuth/setDeleteYn",
+            dataType:"text",
+            data : {
+                'user_id' : userId,
+                'delete_yn' : yn
+            },
+            success : function(data){
+                  if(parseInt(data) == 1) {
+                    alert("전환되었습니다.");
+                    location.reload();
+                  } else {
+                    alert("수정에 문제가 생겼습니다.");
+                  }
+            }
+        });
+    }
+
     function changeDeleteYn(authNo, yn) {
 
         let deleteYn;
@@ -87,6 +108,13 @@
         <th:block th:if="${not #strings.equals(userInfo.user_id, session.loginMember.user_id)}">
             <input type="button" value="관리자 전환" th:if="${#strings.isEmpty(userInfo.auth_code)}" th:onclick="setAdmin([[${userInfo.user_id}]], 'admin')" >
             <input type="button" value="사용자 전환" th:unless="${#strings.isEmpty(userInfo.auth_code)}" th:onclick="setAdmin([[${userInfo.user_id}]], 'user')" >
+        </th:block>
+    </div>
+    <br>
+    <div>
+        <th:block th:if="${not #strings.equals(userInfo.user_id, session.loginMember.user_id)}">
+            <input type="button" value="사용자 비활성화" th:if="${#strings.equals(userInfo.delete_yn, 'N')}" th:onclick="setUserDelete([[${userInfo.user_id}]], 'Y')" >
+            <input type="button" value="사용자 비활성화 해제" th:unless="${#strings.equals(userInfo.delete_yn, 'N')}" th:onclick="setUserDelete([[${userInfo.user_id}]], 'N')" >
         </th:block>
     </div>
     <br>
