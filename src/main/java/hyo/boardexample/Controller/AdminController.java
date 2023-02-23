@@ -36,18 +36,18 @@ public class AdminController {
     }
 
     // 관리자 페이지 내부 기능 권한 체크
-    public String adminSessionRedirect(Login loginMember, String redirect, HttpServletRequest request) {
-        if(!loginMember.getAuth_code().equals("admin")) {
-            HttpSession session = request.getSession();
-            session.invalidate();
-
-            request.setAttribute("msg", "관리자 권한이 없습니다.");
-            request.setAttribute("url", "/admin");
-            return "/alert";
-        } else {
-            return redirect;
-        }
-    }
+//    public String adminSessionRedirect(Login loginMember, String redirect, HttpServletRequest request) {
+//        if(!loginMember.getAuth_code().equals("admin")) {
+//            HttpSession session = request.getSession();
+//            session.invalidate();
+//
+//            request.setAttribute("msg", "관리자 권한이 없습니다.");
+//            request.setAttribute("url", "/admin");
+//            return "/alert";
+//        } else {
+//            return redirect;
+//        }
+//    }
 
     @GetMapping("/modifyForm")
     public String modifyForm(
@@ -56,12 +56,12 @@ public class AdminController {
             @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Login loginMember,
             HttpServletRequest request)
     {
-        String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
+        //String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
 
         BoardType boardType = boardTypeService.getBoardType(typeNo);
 
         model.addAttribute("boardTypeForm", boardType);
-        return url;
+        return request.getRequestURI();
     }
 
     @GetMapping("/getBoardType")
@@ -102,11 +102,11 @@ public class AdminController {
             @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Login loginMember,
             HttpServletRequest request)
     {
-        String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
+        //String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
 
         model.addAttribute("boardTypeForm", new BoardType());
 
-        return url;
+        return request.getRequestURI();
     }
 
     @PostMapping("/boardType/insert")
@@ -141,7 +141,7 @@ public class AdminController {
             @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Login loginMember,
             HttpServletRequest request)
     {
-        String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
+        //String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
 
         Login login = new Login();
         login.setUser_id(userId);
@@ -152,7 +152,7 @@ public class AdminController {
         model.addAttribute("userInfo", loginService.getUser(login));
         model.addAttribute("authList", userAuthService.getUserAuthList(userAuth));
 
-        return url;
+        return request.getRequestURI();
     }
 
     @PostMapping("/loginAuth/update")
@@ -180,13 +180,13 @@ public class AdminController {
             @SessionAttribute(name = SessionConstants.LOGIN_MEMBER, required = false) Login loginMember,
             HttpServletRequest request)
     {
-        String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
+        //String url = adminSessionRedirect(loginMember, request.getRequestURI(), request);
 
         List<BoardType>boardTypeList = boardTypeService.getBoardTypeList("admin");
 
         model.addAttribute("userId", userId);
         model.addAttribute("boardTypeList", boardTypeList);
-        return url;
+        return request.getRequestURI();
     }
 
     @PostMapping("/userAuth/insert")

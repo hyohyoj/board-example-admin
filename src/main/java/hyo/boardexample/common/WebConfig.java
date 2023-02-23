@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -51,6 +52,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public MappingJackson2JsonView jsonView() {
         return new MappingJackson2JsonView();
+    }
+
+    // 관리자 권한 체크 후 redirect 시키는 인터셉터 추가
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AdminInterceptor())
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin", "/admin/login");
     }
 
 //    @Bean
